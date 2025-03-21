@@ -60,12 +60,13 @@ nav ul li a:hover {
 }
 
 /* Dropdown Menu */
+/* Dropdown Menu */
 .dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: black; 
+    background-color: black;
     min-width: 160px;
     z-index: 1;
 }
@@ -73,15 +74,18 @@ nav ul li a:hover {
 .dropdown-menu li a {
     color: #fff;
     padding: 10px;
-    background-color: black; 
+    background-color: black;
 }
+
 .dropdown-menu li a:hover {
-    text-decoration: underline;
+    text-decoration: underline;  /* This ensures the underline effect on hover */
+    color: #e44242;  /* Optional: change the color to something distinct on hover */
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
 
 /* Intro Section */
 #intro {
