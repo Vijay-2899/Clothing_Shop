@@ -65,7 +65,7 @@ nav ul li a:hover {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: black;
+    background-color: black; /* Ensure background color is black */
     min-width: 160px;
     z-index: 1;
 }
@@ -73,16 +73,17 @@ nav ul li a:hover {
 .dropdown-menu li a {
     color: #fff;
     padding: 10px;
-    background-color: black;
+    background-color: black; /* Ensure background color is black */
 }
 
 .dropdown-menu li a:hover {
-    background-color: black;
+    background-color: black; /* Ensure background color is black */
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
 
 /* Intro Section */
 #intro {
