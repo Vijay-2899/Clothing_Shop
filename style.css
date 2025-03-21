@@ -78,7 +78,7 @@ nav ul li a:hover {
 
 .dropdown-menu li a:hover {
     background-color: white; 
-    color: white; 
+    color: blueviolet; 
 }
 
 .dropdown:hover .dropdown-menu {
