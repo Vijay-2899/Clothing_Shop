@@ -79,12 +79,11 @@ nav ul li a:hover {
 .dropdown-menu li a:hover {
     background-color: white; 
     text-decoration: underline;
+}
 
 .dropdown:hover .dropdown-menu {
     display: block;
 }
-
-
 
 /* Intro Section */
 #intro {
