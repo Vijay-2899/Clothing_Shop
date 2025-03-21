@@ -1,37 +1,35 @@
-/* General Reset */
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body and Font */
+/* Body Styles */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
 }
 
-/* Header Styling */
+/* Header Styles */
 header {
     background-color: #333;
     color: #fff;
-    padding: 1rem;
+    padding: 10px 0;
     text-align: center;
 }
 
-header h1 a {
+header a {
     color: #fff;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 2em;
 }
 
+/* Navigation Menu */
 nav ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-    margin-top: 10px;
+    list-style: none;
+    padding: 10px 0;
 }
 
 nav ul li {
@@ -42,74 +40,38 @@ nav ul li {
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.2rem;
-    padding: 10px;
 }
 
-nav ul li a:hover {
-    background-color: #f4a261;
-    border-radius: 5px;
-}
-
-/* Section Styling */
+/* Section Styles */
 section {
-    padding: 2rem 1rem;
-    margin: 1rem;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+/* Product Container Styles */
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.product-item {
     text-align: center;
+    width: 200px;
 }
 
-section h2 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-section p {
-    color: #555;
-    margin: 0.5rem 0;
-}
-
-/* Product Image Styling */
-section img {
+.product-item img {
     width: 100%;
-    max-width: 200px;
     height: auto;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    header h1 a {
-        font-size: 1.5rem;
-    }
-
-    nav ul li {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    section {
-        margin: 0;
-        padding: 1.5rem;
-    }
-
-    section img {
-        width: 100%;
-        max-width: 150px;
-    }
-}
-
-/* Footer Styling */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    max-width: 200px;
 }
