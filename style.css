@@ -60,13 +60,12 @@ nav ul li a:hover {
 }
 
 /* Dropdown Menu */
-/* Dropdown Menu */
 .dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: black; /* Ensure background color is black */
+    background-color: black; 
     min-width: 160px;
     z-index: 1;
 }
@@ -74,12 +73,12 @@ nav ul li a:hover {
 .dropdown-menu li a {
     color: #fff;
     padding: 10px;
-    background-color: black; /* Ensure background color is black */
+    background-color: black; 
 }
 
 .dropdown-menu li a:hover {
-    background-color: white; /* Change background color to white on hover */
-    color: black; /* Change text color to black on hover for better contrast */
+    background-color: white; 
+    color: white; 
 }
 
 .dropdown:hover .dropdown-menu {
