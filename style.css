@@ -78,7 +78,7 @@ nav ul li a:hover {
 
 .dropdown-menu li a:hover {
     background-color: white; 
-    color: blueviolet; 
+    text-underline-offset: white; 
 }
 
 .dropdown:hover .dropdown-menu {
