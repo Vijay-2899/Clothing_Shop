@@ -79,7 +79,7 @@ nav ul li a:hover {
 
 .dropdown-menu li a:hover {
     text-decoration: underline;  /* This ensures the underline effect on hover */
-    color: #e44242;  /* Optional: change the color to something distinct on hover */
+     /* Optional: change the color to something distinct on hover */
 }
 
 .dropdown:hover .dropdown-menu {
