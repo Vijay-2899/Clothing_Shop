@@ -60,6 +60,7 @@ nav ul li a:hover {
 }
 
 /* Dropdown Menu */
+/* Dropdown Menu */
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -77,12 +78,14 @@ nav ul li a:hover {
 }
 
 .dropdown-menu li a:hover {
-    background-color: black; /* Ensure background color is black */
+    background-color: white; /* Change background color to white on hover */
+    color: black; /* Change text color to black on hover for better contrast */
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
 
 
 /* Intro Section */
@@ -94,12 +97,12 @@ nav ul li a:hover {
 
 #intro h2 {
     font-size: 36px;
-    color: #2c3e50;
+    color: black;
 }
 
 #intro p {
     font-size: 18px;
-    color: #34495e;
+    color: black;
     margin-top: 10px;
 }
 
