@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cartTotal.textContent = total;
         cartCount.textContent = cartItems.length;
-        localStorage.setItem("cart", JSON.stringify(cartItems));  // Persist data
+        localStorage.setItem("cart", JSON.stringify(cartItems));  // Save cart in local storage
     }
 
     function addToCart(event) {
