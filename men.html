@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Men Fashion - ZUDIO</title>
     <link rel="stylesheet" href="style(men).css">
+    <script src="script.js"></script>
 </head>
 <body>
     <header>
@@ -21,7 +22,16 @@
         </nav>
     </header>
 
+    <div id="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+        <p>Total: €<span id="cart-total">0</span></p>
+        <p>Items in Cart: <span id="cart-count">0</span></p>
+    </div>
+    
+
     <main>
+        
         <section id="T-Shirt">
             <h2>T-Shirt</h2>
             <p>Shop the latest products</p>
@@ -30,11 +40,20 @@
                     <img src="images/White_Tshirt_men.jpg" height="200px" width="200px" alt="White T-Shirt">
                     <p>White T-Shirt</p>
                     <p>€20</p>
+                    <button class="add-to-cart" data-id="1" data-name="White T-Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+            
                 </div>
                 <div class="product-item">
                     <img src="images/Black_Tshirt_men.jpg" height="200px" width="200px" alt="Black T-Shirt">
                     <p>Black T-Shirt</p>
                     <p>€20</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black T-Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
                 </div>
             </div>
         </section>
@@ -47,11 +66,19 @@
                     <img src="images/White_Shirt_men.jpg" height="200px" width="200px" alt="White Shirt">
                     <p>White Shirt</p>
                     <p>€30</p>
+                    <button class="add-to-cart" data-id="1" data-name="White Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
                 </div>
                 <div class="product-item">
                     <img src="images/Black_Shirt_men.jpg" height="200px" width="200px" alt="Black Shirt">
                     <p>Black Shirt</p>
                     <p>€30</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
                 </div>
             </div>
         </section>
@@ -64,11 +91,19 @@
                     <img src="images/Men_Jean.webp" height="200px" width="200px" alt="Blue Jeans">
                     <p>Blue Jeans</p>
                     <p>€40</p>
+                    <button class="add-to-cart" data-id="1" data-name="Blue Jeans" data-price="20">
+                        Add to Cart
+                    </button>
+                    
                 </div>
                 <div class="product-item">
                     <img src="images/Black_Jean.webp" height="200px" width="200px" alt="Black Jeans">
                     <p>Black Jeans</p>
                     <p>€40</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black Jeans" data-price="20">
+                        Add to Cart
+                    </button>
+                    
                 </div>
             </div>
         </section>

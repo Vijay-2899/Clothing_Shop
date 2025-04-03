@@ -3,44 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZUDIO</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Men Fashion - ZUDIO</title>
+    <link rel="stylesheet" href="style(men).css">
+    <script src="script.js"></script>
 </head>
 <body>
     <header>
         <h1>
-            <a href="index.html">ZUDIO</a>
+            <a href="index.html">ZUDIO</a>           
         </h1>
         <nav>
             <ul>
-                <li class="dropdown">
-                    <a href="men.html#T-Shirt">Men</a>  <!-- Link to men section -->
-                    <ul class="dropdown-menu">
-                        <li><a href="men.html#T-Shirt">T-Shirts</a></li> <!-- Link to Men > T-Shirts section -->
-                        <li><a href="men.html#Shirt">Shirts</a></li> <!-- Link to Men > Shirts section -->
-                        <li><a href="men.html#Jeans">Jeans</a></li> <!-- Link to Men > Jeans section -->
-                        <li><a href="men.html#Jackets">Jackets</a></li> <!-- Link to Men > Jackets section -->
-                    </ul>
-                </li>
-                <li class="dropdown"
-                    <a href="women.html"
-                <!-- Other dropdowns for Women, Kids, Accessories -->
+                <li><a href="women.html#T-Shirt">T-Shirt</a></li>
+                <li><a href="women.html#Shirt">Shirt</a></li>
+                <li><a href="women.html#Jeans">Jeans</a></li>
+                <li><a href="women.html#Jackets">Jackets</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="intro">
-        <h2><em>Stay ahead of the curve with the latest fashion trends.</em></h2>
-        <p><b>Elevate your style with top brands and timeless designs</b></p>
-    </section>
+    <div id="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+        <p>Total: €<span id="cart-total">0</span></p>
+        <p>Items in Cart: <span id="cart-count">0</span></p>
+    </div>
+    
 
-    <section id="map">
-        <h2>Our Stores</h2>
-        <p>Find a store near you</p>
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8318931513186!2d77.60427207515717!3d12.982601687333784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16626f424785%3A0x324d175dcc8c9060!2sZUDIO%20-%20Commercial%20Street%2C%20Bangalore!5e0!3m2!1sen!2sie!4v1741015844869!5m2!1sen!2sie" 
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </section>
+    <main>
+        
+        <section id="T-Shirt">
+            <h2>T-Shirt</h2>
+            <p>Shop the latest products</p>
+            <div class="product-container">
+                <div class="product-item">
+                    <img src="images/White_Tshirt_men.jpg" height="200px" width="200px" alt="White T-Shirt">
+                    <p>White T-Shirt</p>
+                    <p>€20</p>
+                    <button class="add-to-cart" data-id="1" data-name="White T-Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+            
+                </div>
+                <div class="product-item">
+                    <img src="images/Black_Tshirt_men.jpg" height="200px" width="200px" alt="Black T-Shirt">
+                    <p>Black T-Shirt</p>
+                    <p>€20</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black T-Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="Shirt">
+            <h2>Shirt</h2>
+            <p>Shop the latest products</p>
+            <div class="product-container">
+                <div class="product-item">
+                    <img src="images/White_Shirt_men.jpg" height="200px" width="200px" alt="White Shirt">
+                    <p>White Shirt</p>
+                    <p>€30</p>
+                    <button class="add-to-cart" data-id="1" data-name="White Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+                </div>
+                <div class="product-item">
+                    <img src="images/Black_Shirt_men.jpg" height="200px" width="200px" alt="Black Shirt">
+                    <p>Black Shirt</p>
+                    <p>€30</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black Shirt" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="Jeans">
+            <h2>Jeans</h2>
+            <p>Shop the latest products</p>
+            <div class="product-container">
+                <div class="product-item">
+                    <img src="images/Men_Jean.webp" height="200px" width="200px" alt="Blue Jeans">
+                    <p>Blue Jeans</p>
+                    <p>€40</p>
+                    <button class="add-to-cart" data-id="1" data-name="Blue Jeans" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+                </div>
+                <div class="product-item">
+                    <img src="images/Black_Jean.webp" height="200px" width="200px" alt="Black Jeans">
+                    <p>Black Jeans</p>
+                    <p>€40</p>
+                    <button class="add-to-cart" data-id="1" data-name="Black Jeans" data-price="20">
+                        Add to Cart
+                    </button>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="Jackets">
+            <h2>Jackets</h2>
+            <p>Shop the latest products</p>
+            <div class="product-container">
+                <div class="product-item">
+                    <img src="images/Blue_Jacket.webp" height="200px" width="200px" alt="Blue Jacket">
+                    <p>Blue Jacket</p>
+                    <p>€50</p>
+                </div>
+                <div class="product-item">
+                    <img src="images/Black_Jacket.webp" height="200px" width="200px" alt="Black Jacket">
+                    <p>Black Jacket</p>
+                    <p>€50</p>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
