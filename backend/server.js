@@ -9,12 +9,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const mongoURI = "mongodb+srv://vjk2899:<db_password>@vijay02.llwgkkw.mongodb.net/?appName=Zudio";
+// Updated MongoDB connection string (URL-encoded)
+const mongoURI = "mongodb+srv://vjk2899:Vijay%402899@vijay02.llwgkkw.mongodb.net/Zudio?retryWrites=true&w=majority";
+
 
 mongoose
-  .connect(mongoURI)
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Atlas connected successfully!"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => console.error("MongoDB connection error:", err.message));
 
 // Define routes
 app.post("/api/products", async (req, res) => {
@@ -34,4 +36,3 @@ app.get("/", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
