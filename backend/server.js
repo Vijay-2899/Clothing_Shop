@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
+const bcrypt = require("bcrypt"); // For password hashing
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,15 @@ db.run(
         price REAL NOT NULL,
         description TEXT,
         inStock BOOLEAN DEFAULT 1
+    )`
+);
+
+// Create a table for users
+db.run(
+    `CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
     )`
 );
 
@@ -127,6 +137,45 @@ app.delete("/api/products/:id", (req, res) => {
             res.status(404).json({ error: "Product not found" });
         } else {
             res.status(200).json({ message: "Product deleted successfully" });
+        }
+    });
+});
+
+// Signup route for users
+app.post("/api/signup", (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+    }
+
+    const hashedPassword = bcrypt.hashSync(password, 10); // Hash password
+    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`,
+        [username, hashedPassword],
+        function (err) {
+            if (err) {
+                res.status(400).json({ error: err.message });
+            } else {
+                res.status(201).json({ id: this.lastID, username });
+            }
+        });
+});
+
+// Login route for users
+app.post("/api/login", (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+    }
+
+    db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, user) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (!user || !bcrypt.compareSync(password, user.password)) {
+            res.status(401).json({ error: "Invalid credentials" });
+        } else {
+            res.status(200).json({ message: "Login successful", username });
         }
     });
 });
