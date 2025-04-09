@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             const username = document.getElementById("login-username").value;
             const password = document.getElementById("login-password").value;
+            console.log(username,password);
 
             fetch("http://localhost:3000/api/login", {
                 method: "POST",
