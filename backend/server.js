@@ -141,24 +141,29 @@ app.delete("/api/products/:id", (req, res) => {
     });
 });
 
-// Signup route for users
 app.post("/api/signup", (req, res) => {
     const { username, password } = req.body;
-
     if (!username || !password) {
         return res.status(400).json({ error: "Username and password are required" });
     }
 
-    const hashedPassword = bcrypt.hashSync(password, 10); // Hash password
-    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`,
-        [username, hashedPassword],
-        function (err) {
-            if (err) {
-                res.status(400).json({ error: err.message });
-            } else {
+    // Check if username already exists
+    db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, user) => {
+        if (user) {
+            return res.status(400).json({ error: "Username already exists. Please choose a different username." });
+        }
+
+        // Insert new user if the username is unique
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        db.run(`INSERT INTO users (username, password) VALUES (?, ?)`,
+            [username, hashedPassword],
+            function (err) {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
                 res.status(201).json({ id: this.lastID, username });
-            }
-        });
+            });
+    });
 });
 
 // Login route for users
