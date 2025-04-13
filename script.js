@@ -1,62 +1,56 @@
-// SIGNUP Handler
-document.getElementById("signup-form").addEventListener("submit", handleSignup);
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
-async function handleSignup(event) {
-  event.preventDefault();
+const app = express();
+const db = new sqlite3.Database('./database.db');
 
-  const username = document.getElementById("signup-username").value;
-  const password = document.getElementById("signup-password").value;
+// Initialize database
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    price REAL,
+    category TEXT CHECK(category IN ('men', 'women'))
+  )`);
+});
 
-  console.log("Signup:", username, password);
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-  if (username && password) {
-    fetch("http://localhost:3000/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const message = document.getElementById("signup-message");
-        if (data.error) {
-          message.textContent = data.error;
-          message.style.color = "red";
-        } else {
-          message.textContent = "Signup successful! You can now log in.";
-          message.style.color = "green";
-        }
-      });
+// CRUD Endpoints
+app.get('/api/products', (req, res) => {
+  const { category } = req.query;
+  let query = 'SELECT * FROM products';
+  const params = [];
+  
+  if (category) {
+    query += ' WHERE category = ?';
+    params.push(category);
   }
-}
 
-// LOGIN Handler
-document.getElementById("login-form").addEventListener("submit", handleLogin);
+  db.all(query, params, (err, products) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(products);
+  });
+});
 
-async function handleLogin(event) {
-  event.preventDefault();
+app.post('/api/products', (req, res) => {
+  const { name, price, category } = req.body;
+  db.run(
+    'INSERT INTO products (name, price, category) VALUES (?, ?, ?)',
+    [name, price, category],
+    function(err) {
+      if (err) return res.status(400).json({ error: err.message });
+      res.status(201).json({ id: this.lastID });
+    }
+  );
+});
 
-  const username = document.getElementById("login-username").value;
-  const password = document.getElementById("login-password").value;
+// Add PUT and DELETE endpoints similarly
 
-  console.log("Login:", username, password);
-
-  if (username && password) {
-    fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    })
-    .then(response => response.json())
-    .then(data => {
-      const message = document.getElementById("login-message");
-      if (data.error) {
-        message.textContent = data.error;
-        message.style.color = "red";
-      } else {
-        message.textContent = `Welcome, ${data.username}!`;
-        message.style.color = "green";
-      }
-    });
-  }
-}
-
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

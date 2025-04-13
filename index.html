@@ -1,18 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Clothing Shop</title>
 </head>
 <body>
-  <header>
-    <h1>Clothing Shop</h1>
-    <nav>
-      <a href="men.html">Men</a>
-      <a href="women.html">Women</a>
-      <span id="cart-count">0</span>
-    </nav>
-  </header>
-  <script src="js/auth.js"></script>
+  <h1>Product Management</h1>
+  
+  <div>
+    <h2>Add Product</h2>
+    <input type="text" id="name" placeholder="Name">
+    <input type="number" id="price" placeholder="Price">
+    <select id="category">
+      <option value="men">Men</option>
+      <option value="women">Women</option>
+    </select>
+    <button onclick="addProduct()">Add</button>
+  </div>
+
+  <div id="productList"></div>
+
+  <script>
+    // CRUD operations
+    async function loadProducts() {
+      const res = await fetch('http://localhost:3000/api/products');
+      const products = await res.json();
+      document.getElementById('productList').innerHTML = products.map(p => `
+        <div>
+          ${p.name} - $${p.price} (${p.category})
+          <button onclick="deleteProduct(${p.id})">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    async function addProduct() {
+      await fetch('http://localhost:3000/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('name').value,
+          price: document.getElementById('price').value,
+          category: document.getElementById('category').value
+        })
+      });
+      loadProducts();
+    }
+
+    loadProducts();
+  </script>
 </body>
 </html>
