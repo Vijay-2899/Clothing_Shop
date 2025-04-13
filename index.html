@@ -1,63 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zudio-Clone | Home</title>
+  <title>Home</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="main-header">
-    <div class="logo">
-      <h1>ZUDIO</h1>
-    </div>
-    <nav class="main-nav">
-      <a href="index.html">Home</a>
+  <header>
+    <h1>Clothing Shop</h1>
+    <nav>
       <a href="men.html">Men</a>
       <a href="women.html">Women</a>
-      <div class="auth-buttons">
-        <a href="login.html" class="login-btn">Login</a>
-        <a href="signup.html" class="signup-btn">Sign Up</a>
-      </div>
+      <span id="cart-count">0</span>
     </nav>
-    <div class="cart-icon">
-      🛒 <span id="cart-count">0</span>
-    </div>
   </header>
-
-  <main class="product-section">
-    <h2>Featured Products</h2>
-    
-    <!-- Product Filter -->
-    <div class="product-filter">
-      <button class="filter-btn active" data-category="all">All</button>
-      <button class="filter-btn" data-category="men">Men</button>
-      <button class="filter-btn" data-category="women">Women</button>
-    </div>
-
-    <!-- Product Grid -->
-    <div class="product-grid" id="productGrid">
-      <!-- Products will be loaded here via JavaScript -->
-    </div>
-
-    <!-- Admin Panel (only show if logged in as admin) -->
-    <div class="admin-panel" id="adminPanel">
-      <h3>Add New Product</h3>
-      <form id="addProductForm">
-        <input type="text" id="productName" placeholder="Product Name" required>
-        <input type="number" id="productPrice" placeholder="Price" min="0" step="0.01" required>
-        <select id="productCategory" required>
-          <option value="">Select Category</option>
-          <option value="men">Men</option>
-          <option value="women">Women</option>
-        </select>
-        <input type="text" id="productImage" placeholder="Image URL">
-        <button type="submit">Add Product</button>
-      </form>
-    </div>
-  </main>
-
-  <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>

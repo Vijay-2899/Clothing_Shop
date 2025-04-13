@@ -1,49 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Men's Fashion - ZUDIO</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Men's Collection</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1><a href="index.html">ZUDIO</a></h1>
-        <nav>
-            <ul>
-                <li><a href="#T-Shirts">T-Shirts</a></li>
-                <li><a href="#Shirts">Shirts</a></li>
-                <li><a href="#Jeans">Jeans</a></li>
-                <li><a href="#Jackets">Jackets</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>Men's Collection</h1>
+    <a href="index.html">Home</a>
+    <span id="cart-count">0</span>
+  </header>
+  
+  <div id="products" class="product-grid"></div>
 
-    <main>
-        <!-- T-Shirts Section -->
-        <section id="T-Shirts">
-            <h2>T-Shirts</h2>
-            <div class="product-container">
-                <div class="product-item">
-                    <img src="images/White_Tshirt_men.jpg" alt="White T-Shirt">
-                    <p>White T-Shirt</p>
-                    <p>€20</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-item">
-                    <img src="images/Black_Tshirt_men.jpg" alt="Black T-Shirt">
-                    <p>Black T-Shirt</p>
-                    <p>€20</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Repeat similar sections for Shirts, Jeans, and Jackets -->
-    </main>
-
-    <footer>
-        <p>&copy; 2025 ZUDIO. All rights reserved.</p>
-    </footer>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    loadProducts('men');
+  </script>
 </body>
 </html>

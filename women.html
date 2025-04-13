@@ -1,49 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Women's Fashion - ZUDIO</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Women's Collection</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1><a href="index.html">ZUDIO</a></h1>
-        <nav>
-            <ul>
-                <li><a href="#Dresses">Dresses</a></li>
-                <li><a href="#Tops">Tops</a></li>
-                <li><a href="#Jeans">Jeans</a></li>
-                <li><a href="#Skirts">Skirts</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>Women's Collection</h1>
+    <a href="index.html">Home</a>
+    <span id="cart-count">0</span>
+  </header>
+  
+  <div id="products" class="product-grid"></div>
 
-    <main>
-        <!-- Dresses Section -->
-        <section id="Dresses">
-            <h2>Dresses</h2>
-            <div class="product-container">
-                <div class="product-item">
-                    <img src="images/Red_Dress.jpg" alt="Red Dress">
-                    <p>Red Dress</p>
-                    <p>€40</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-item">
-                    <img src="images/Blue_Dress.jpg" alt="Blue Dress">
-                    <p>Blue Dress</p>
-                    <p>€45</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Repeat similar sections for Tops, Jeans, and Skirts -->
-    </main>
-
-    <footer>
-        <p>&copy; 2025 ZUDIO. All rights reserved.</p>
-    </footer>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    loadProducts('women');
+  </script>
 </body>
 </html>
