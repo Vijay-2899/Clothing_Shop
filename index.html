@@ -1,53 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Clothing Shop</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothing Shop Admin</title>
+  <link rel="stylesheet" href="admin.css"> <!-- Link to your external CSS -->
 </head>
 <body>
-  <h1>Product List</h1>
-  <ul id="productList"></ul>
+  <header class="admin-header">
+    <h1>Clothing Shop Admin Panel</h1>
+    <nav class="admin-nav">
+      <a href="men.html">Men's Collection</a>
+      <a href="women.html">Women's Collection</a>
+    </nav>
+  </header>
 
-  <h2>Add Product</h2>
-  <input type="text" id="name" placeholder="Product name" />
-  <input type="number" id="price" placeholder="Price" />
-  <button onclick="addProduct()">Add</button>
+  <div class="product-form">
+    <h2>Add New Product</h2>
+    <input type="text" id="name" placeholder="Product name" required>
+    <input type="number" id="price" placeholder="Price" min="0" step="0.01" required>
+    <button class="add-btn" onclick="addProduct()">Add Product</button>
+  </div>
+
+  <div class="product-list" id="productList"></div>
 
   <script>
+    // Load products on page load
+    document.addEventListener('DOMContentLoaded', fetchProducts);
+
     async function fetchProducts() {
-      const res = await fetch('http://localhost:3000/products');
-      const products = await res.json();
-      const list = document.getElementById('productList');
-      list.innerHTML = '';
-      products.forEach(p => {
-        const item = document.createElement('li');
-        item.textContent = `${p.name} - $${p.price}`;
-        const delBtn = document.createElement('button');
-        delBtn.textContent = 'Delete';
-        delBtn.onclick = () => deleteProduct(p.id);
-        item.appendChild(delBtn);
-        list.appendChild(item);
-      });
+      try {
+        const res = await fetch('http://localhost:3000/products');
+        if (!res.ok) throw new Error('Failed to fetch products');
+        
+        const products = await res.json();
+        renderProducts(products);
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to load products. Please try again.');
+      }
+    }
+
+    function renderProducts(products) {
+      const container = document.getElementById('productList');
+      container.innerHTML = products.map(product => `
+        <div class="product-card">
+          <h3>${product.name}</h3>
+          <p>Price: $${product.price.toFixed(2)}</p>
+          <button class="delete-btn" onclick="deleteProduct(${product.id})">
+            Delete Product
+          </button>
+        </div>
+      `).join('');
     }
 
     async function addProduct() {
       const name = document.getElementById('name').value;
-      const price = document.getElementById('price').value;
-      await fetch('http://localhost:3000/products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, price })
-      });
-      fetchProducts();
+      const price = parseFloat(document.getElementById('price').value);
+
+      if (!name || isNaN(price)) {
+        alert('Please enter valid product details');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, price })
+        });
+
+        if (!response.ok) throw new Error('Failed to add product');
+        
+        // Clear form and refresh list
+        document.getElementById('name').value = '';
+        document.getElementById('price').value = '';
+        await fetchProducts();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to add product. Please try again.');
+      }
     }
 
     async function deleteProduct(id) {
-      await fetch(`http://localhost:3000/products/${id}`, {
-        method: 'DELETE'
-      });
-      fetchProducts();
-    }
+      if (!confirm('Are you sure you want to delete this product?')) return;
+      
+      try {
+        const response = await fetch(`http://localhost:3000/products/${id}`, {
+          method: 'DELETE'
+        });
 
-    fetchProducts();
+        if (!response.ok) throw new Error('Failed to delete product');
+        
+        await fetchProducts();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to delete product. Please try again.');
+      }
+    }
   </script>
 </body>
 </html>
