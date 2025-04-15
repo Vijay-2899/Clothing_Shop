@@ -8,10 +8,16 @@
     <a href="women.html">Women</a> |
     <a href="cart.html">🛒 Cart</a>
   </nav>
+
   <script>
-    if (!localStorage.getItem('isLoggedIn')) {
+    const user = localStorage.getItem('loggedInUser');
+    if (!user) {
+      // If not logged in, redirect to login page
       window.location.href = 'login.html';
+    } else {
+      console.log('Welcome,', user);
     }
   </script>
+  
 </body>
 </html>

@@ -51,6 +51,7 @@ if (loginForm) {
 
       if (data.success) {
         alert('Login successful!');
+        localStorage.setItem('loggedInUser', username); // ✅ Save user
         window.location.href = 'home.html';
       } else {
         document.getElementById('login-message').textContent = data.message;
