@@ -14,7 +14,6 @@ app.use(express.static(__dirname)); // Serve your HTML/CSS/JS files
 const dataFile = path.join(__dirname, 'products-data.json');
 
 // CRUD Operations
-
 // CREATE
 app.post('/api/products', (req, res) => {
     const products = getProducts();
