@@ -1,0 +1,14 @@
+[
+    {
+      "id": 1,
+      "name": "Men T-Shirt",
+      "price": 499,
+      "category": "men"
+    },
+    {
+      "id": 2,
+      "name": "Women Kurti",
+      "price": 699,
+      "category": "women"
+    }
+  ]
