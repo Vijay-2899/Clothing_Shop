@@ -10,5 +10,10 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "sqlite3": "^5.1.6"
-  }
+  },
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

@@ -1,81 +1,52 @@
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = 3000;
+const PORT = 5000;
 
-// Middleware
-app.use(express.json());
 app.use(cors());
-app.use(express.static(__dirname)); // Serve your HTML/CSS/JS files
+app.use(express.json());
 
-// Database setup
-const dataFile = path.join(__dirname, 'products-data.json');
+const DATA_FILE = './backend/db.json';
 
-// CRUD Operations
-// CREATE
+// Read all products
+app.get('/api/products', (req, res) => {
+    const data = JSON.parse(fs.readFileSync(DATA_FILE));
+    res.json(data);
+});
+
+// Add a new product
 app.post('/api/products', (req, res) => {
-    const products = getProducts();
-    const newProduct = {
-        id: Date.now().toString(),
-        name: req.body.name,
-        category: req.body.category,
-        price: req.body.price,
-        stock: req.body.stock,
-        description: req.body.description || ''
-    };
-    products.push(newProduct);
-    saveProducts(products);
+    const data = JSON.parse(fs.readFileSync(DATA_FILE));
+    const newProduct = { id: Date.now(), ...req.body };
+    data.push(newProduct);
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
     res.status(201).json(newProduct);
 });
 
-// READ ALL
-app.get('/api/products', (req, res) => {
-    res.json(getProducts());
-});
-
-// READ ONE
-app.get('/api/products/:id', (req, res) => {
-    const product = getProducts().find(p => p.id === req.params.id);
-    product ? res.json(product) : res.status(404).json({error: 'Not found'});
-});
-
-// UPDATE
+// Update a product
 app.put('/api/products/:id', (req, res) => {
-    const products = getProducts();
-    const index = products.findIndex(p => p.id === req.params.id);
-    if (index === -1) return res.status(404).json({error: 'Not found'});
-    
-    products[index] = {...products[index], ...req.body};
-    saveProducts(products);
-    res.json(products[index]);
+    const data = JSON.parse(fs.readFileSync(DATA_FILE));
+    const id = Number(req.params.id);
+    const updated = req.body;
+
+    const index = data.findIndex(item => item.id === id);
+    if (index === -1) return res.status(404).send('Product not found');
+
+    data[index] = { ...data[index], ...updated };
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    res.json(data[index]);
 });
 
-// DELETE
+// Delete a product
 app.delete('/api/products/:id', (req, res) => {
-    const products = getProducts().filter(p => p.id !== req.params.id);
-    saveProducts(products);
-    res.status(204).end();
+    let data = JSON.parse(fs.readFileSync(DATA_FILE));
+    const id = Number(req.params.id);
+    data = data.filter(item => item.id !== id);
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    res.status(204).send();
 });
 
-// Helper functions
-function getProducts() {
-    try {
-        return fs.existsSync(dataFile) 
-            ? JSON.parse(fs.readFileSync(dataFile)) 
-            : [];
-    } catch (err) {
-        return [];
-    }
-}
-
-function saveProducts(products) {
-    fs.writeFileSync(dataFile, JSON.stringify(products));
-}
-
-// Start server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-    console.log(`API Endpoint: http://localhost:${port}/api/products`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
