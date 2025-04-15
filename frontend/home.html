@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Home</title></head>
+<body>
+  <h1>Welcome to Zudio Clone</h1>
+  <nav>
+    <a href="men.html">Men</a> |
+    <a href="women.html">Women</a> |
+    <a href="cart.html">🛒 Cart</a>
+  </nav>
+  <script>
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
