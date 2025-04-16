@@ -9,7 +9,7 @@ if (signupForm) {
     const password = document.getElementById('new-password').value;
 
     try {
-      const res = await fetch('https://clothing-shop-vijay2425.web.app/api/signup', {
+      const res = await fetch('https://redesigned-happiness-xx5vqpr7ppwhqg-4000.app.github.dev/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -41,7 +41,7 @@ if (loginForm) {
     const password = document.getElementById('password').value;
 
     try {
-      const res = await fetch('https://clothing-shop-vijay2425.web.app/api/login', {
+      const res = await fetch('https://redesigned-happiness-xx5vqpr7ppwhqg-4000.app.github.dev/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -54,10 +54,10 @@ if (loginForm) {
         alert('Login successful!');
         window.location.href = 'index.html';
       } else {
-        document.getElementById('login-message').textContent = data.message;
+        document.getElementById('login-message').textContent = data.message || 'Login failed.';
       }
-    } catch (error) {
-      console.error('Login error:', error);
+    } catch (err) {
+      console.error('Login error:', err);
       document.getElementById('login-message').textContent = 'Something went wrong. Try again.';
     }
   });

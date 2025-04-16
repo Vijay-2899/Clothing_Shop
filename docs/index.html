@@ -5,38 +5,22 @@
   <title>Home - Clothing Shop</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- 🔐 Login protection -->
   <script>
-    const isLoggedIn = localStorage.getItem('loggedIn');
-    if (!isLoggedIn) {
+    // 🔒 Block direct access unless logged in
+    if (!localStorage.getItem('loggedIn')) {
       window.location.href = 'login.html';
     }
   </script>
 </head>
 <body>
-  <header>
-    <h1>Welcome to Clothing Shop</h1>
-    <button onclick="logout()" style="float: right; margin: 10px;">Logout</button>
-  </header>
+  <h1>Welcome to Clothing Shop</h1>
 
-  <main>
-    <section>
-      <h2>Browse Our Collection</h2>
-      <div class="nav-buttons">
-        <a href="men.html"><button>Men's Section</button></a>
-        <a href="women.html"><button>Women's Section</button></a>
-        <a href="cart.html"><button>🛒 View Cart</button></a>
-      </div>
-    </section>
-  </main>
+  <div class="nav-buttons">
+    <a href="men.html"><button>Men's Section</button></a>
+    <a href="women.html"><button>Women's Section</button></a>
+    <a href="cart.html"><button>🛒 View Cart</button></a>
+  </div>
 
-  <!-- 🧠 Logout Logic -->
-  <script>
-    function logout() {
-      localStorage.removeItem('loggedIn');
-      localStorage.removeItem('cart'); // optional
-      window.location.href = 'login.html';
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
