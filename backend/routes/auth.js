@@ -1,43 +1,28 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 
-const dbPath = path.join(__dirname, '../database.sqlite');
-const db = new sqlite3.Database(dbPath);
+const usersFile = path.join(__dirname, '../db/users.json');
 
-// SIGNUP
-router.post('/signup', async (req, res) => {
+router.post('/signup', (req, res) => {
   const { username, password } = req.body;
 
-  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
-    if (row) {
-      return res.json({ success: false, message: 'User already exists' });
-    }
+  if (!fs.existsSync(usersFile)) {
+    fs.writeFileSync(usersFile, '[]');
+  }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], function (err) {
-      if (err) return res.status(500).json({ success: false, message: 'DB error' });
-      res.json({ success: true, message: 'Signup successful' });
-    });
-  });
+  const users = JSON.parse(fs.readFileSync(usersFile));
+
+  const userExists = users.find(u => u.username === username);
+  if (userExists) {
+    return res.status(400).json({ success: false, message: 'User already exists' });
+  }
+
+  users.push({ username, password });
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+  res.status(200).json({ success: true, message: 'Signup successful' });
 });
 
-// LOGIN
-router.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user) => {
-    if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials' });
-
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
-    }
-
-    res.json({ success: true, message: 'Login successful' });
-  });
-});
-
-module.exports = router;
+module.exports = router; // ✅ ADD THIS LINE
