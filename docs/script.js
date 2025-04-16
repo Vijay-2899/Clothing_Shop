@@ -1,4 +1,4 @@
-const backend = "https://clothing-shop-7qq6.onrender.com/api";
+const backend = "http://localhost:4000/api";
 
 // ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
