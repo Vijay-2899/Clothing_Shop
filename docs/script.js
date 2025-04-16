@@ -1,5 +1,4 @@
-const backend = "/api";
-
+const backend = "https://zudio-backend-av62.onrender.com/api";
 
 // ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
