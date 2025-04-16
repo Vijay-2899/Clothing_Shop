@@ -8,8 +8,11 @@ const PORT = process.env.PORT || 4000;
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  }));
+  
 
 app.use('/api', authRoutes);
 app.use('/api/products', productRoutes);
