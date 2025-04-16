@@ -5,14 +5,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Men's Products</h2>
+  <h2>Women Products</h2>
   <div id="product-list"></div>
   <a href="cart.html">🛒 Go to Cart</a>
 
   <script src="script.js"></script>
   <script>
     async function loadProducts() {
-      const res = await fetch(`${backend}/products?category=men`);
+      const apiURL = 'https://clothing-shop-7qq6.onrender.com/api/products?category=women';
       const products = await res.json();
 
       const container = document.getElementById("product-list");
