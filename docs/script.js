@@ -1,10 +1,11 @@
 const backendURL = "https://redesigned-happiness-xx5vqpr7ppwhqg-4000.app.github.dev";
 
-// 🔐 SIGNUP
+// --- SIGNUP ---
 const signupForm = document.getElementById('signup-form');
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const username = document.getElementById('new-username').value;
     const password = document.getElementById('new-password').value;
 
@@ -16,6 +17,7 @@ if (signupForm) {
       });
 
       const data = await res.json();
+
       if (data.success) {
         alert('Signup successful! Redirecting to login...');
         window.location.href = 'login.html';
@@ -29,11 +31,12 @@ if (signupForm) {
   });
 }
 
-// 🔓 LOGIN
+// --- LOGIN ---
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -45,10 +48,10 @@ if (loginForm) {
       });
 
       const data = await res.json();
+
       if (data.success) {
-        localStorage.setItem('user', username);
-        alert('Login successful!');
-        window.location.href = 'index.html'; // or home.html if needed
+        alert('Login successful! Redirecting to home...');
+        window.location.href = 'index.html'; // or home.html if that was your original
       } else {
         document.getElementById('login-message').textContent = data.message;
       }
@@ -57,22 +60,4 @@ if (loginForm) {
       document.getElementById('login-message').textContent = 'Something went wrong. Try again.';
     }
   });
-}
-
-// 🚪 LOGOUT
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('user');
-    window.location.href = 'login.html';
-  });
-}
-
-// 🛡️ Redirect to login if not logged in
-const protectedPages = ['index.html', 'men.html', 'women.html', 'cart.html'];
-if (protectedPages.some(page => window.location.pathname.includes(page))) {
-  const user = localStorage.getItem('user');
-  if (!user) {
-    window.location.href = 'login.html';
-  }
 }

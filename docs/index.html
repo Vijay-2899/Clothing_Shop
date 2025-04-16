@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Home - Clothing Shop</title>
-  <link rel="stylesheet" href="style.css" />
-
-  <script>
-    // 🔒 Block direct access unless logged in
-    if (!localStorage.getItem('loggedIn')) {
-      window.location.href = 'login.html';
-    }
-  </script>
+  <meta charset="UTF-8">
+  <title>Home</title>
 </head>
 <body>
   <h1>Welcome to Clothing Shop</h1>
-
-  <div class="nav-buttons">
-    <a href="men.html"><button>Men's Section</button></a>
-    <a href="women.html"><button>Women's Section</button></a>
-    <a href="cart.html"><button>🛒 View Cart</button></a>
-  </div>
-
-  <script src="script.js"></script>
+  <a href="men.html">Men</a> |
+  <a href="women.html">Women</a> |
+  <a href="cart.html">Cart 🛒</a>
 </body>
 </html>
