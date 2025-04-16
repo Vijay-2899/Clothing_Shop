@@ -50,10 +50,10 @@ if (loginForm) {
       const data = await res.json();
 
       if (data.success) {
-        alert('Login successful!');
-        localStorage.setItem('loggedInUser', username); // ✅ Save user
+        localStorage.setItem('loggedIn', 'true');
         window.location.href = 'index.html';
-      } else {
+      }      
+      else {
         document.getElementById('login-message').textContent = data.message;
       }
     } catch (error) {
@@ -64,10 +64,10 @@ if (loginForm) {
 
   
   function logout() {
-    // If you’re using localStorage for session tracking, clear it here
-    localStorage.removeItem('cart'); // optional: clear cart
-    // Redirect to login page
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('cart'); // optional
     window.location.href = 'login.html';
   }
+  
   
 }

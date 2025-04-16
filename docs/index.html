@@ -19,6 +19,10 @@
       console.log('Welcome,', user);
     }
 
+    if (!localStorage.getItem('loggedIn')) {
+    window.location.href = 'login.html';
+  }
+
     <button onclick="logout()" style="float: right;">Logout</button>
 
   </script>
