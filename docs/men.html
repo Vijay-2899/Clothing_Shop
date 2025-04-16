@@ -7,6 +7,9 @@
 </head>
 <body>
   <h2>Men's Products</h2>
+
+  <input type="text" id="search" placeholder="Search products..." />
+
   <div id="product-list"></div>
   <a href="cart.html">🛒 Go to Cart</a>
 
@@ -26,28 +29,42 @@
 
     function addToCart(product) {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push({
-        name: product.name,
-        price: product.price,
-        image: product.image
-      });
+      cart.push(product);
       localStorage.setItem('cart', JSON.stringify(cart));
       alert(`${product.name} added to cart!`);
     }
 
-    function loadProducts() {
+    function renderProducts(filteredProducts) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
 
-      products.forEach(p => {
+      filteredProducts.forEach((p, index) => {
         const card = document.createElement('div');
         card.innerHTML = `
           <img src="${p.image}" alt="${p.name}" width="150" height="150" />
           <h3>${p.name}</h3>
           <p>€${p.price.toFixed(2)}</p>
-          <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+          <button class="add-btn" data-index="${index}">Add to Cart</button>
         `;
         container.appendChild(card);
+      });
+
+      document.querySelectorAll('.add-btn').forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          addToCart(filteredProducts[index]);
+        });
+      });
+    }
+
+    function loadProducts() {
+      renderProducts(products);
+
+      const searchInput = document.getElementById('search');
+      searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm));
+        renderProducts(filtered);
       });
     }
 
