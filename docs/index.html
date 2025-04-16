@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Home</title></head>
-<link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - Clothing Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Redirect to login if not logged in
+    if (!localStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</head>
 <body>
-  <h1>Welcome to Zudio </h1>
-  <nav>
-    <a href="men.html">Men</a> |
-    <a href="women.html">Women</a> |
-    <a href="cart.html">🛒 Cart</a>
-  </nav>
+  <header>
+    <h1>Welcome to Clothing Shop</h1>
+    <button onclick="logout()" style="float: right; margin: 10px;">Logout</button>
+  </header>
+
+  <main>
+    <section>
+      <h2>Browse Our Collection</h2>
+      <div class="nav-buttons">
+        <a href="men.html"><button>Men's Section</button></a>
+        <a href="women.html"><button>Women's Section</button></a>
+        <a href="cart.html"><button>🛒 View Cart</button></a>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const user = localStorage.getItem('loggedInUser');
-    if (!user) {
-      // If not logged in, redirect to login page
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('cart'); // optional: clear cart
       window.location.href = 'login.html';
-    } else {
-      console.log('Welcome,', user);
     }
-
-    if (!localStorage.getItem('loggedIn')) {
-    window.location.href = 'login.html';
-  }
-
-    <button onclick="logout()" style="float: right;">Logout</button>
-
   </script>
-  
 </body>
 </html>
