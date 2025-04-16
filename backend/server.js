@@ -4,7 +4,11 @@ const cors = require('cors');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://verbose-cod-46jw9vq5qv63x6-5500.app.github.dev",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve static files from docs folder
