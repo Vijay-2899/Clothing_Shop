@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <title>Home - Clothing Shop</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔐 Login protection -->
   <script>
-    // Redirect to login if not logged in
-    if (!localStorage.getItem('loggedIn')) {
+    const isLoggedIn = localStorage.getItem('loggedIn');
+    if (!isLoggedIn) {
       window.location.href = 'login.html';
     }
   </script>
@@ -28,10 +30,11 @@
     </section>
   </main>
 
+  <!-- 🧠 Logout Logic -->
   <script>
     function logout() {
       localStorage.removeItem('loggedIn');
-      localStorage.removeItem('cart'); // optional: clear cart
+      localStorage.removeItem('cart'); // optional
       window.location.href = 'login.html';
     }
   </script>
