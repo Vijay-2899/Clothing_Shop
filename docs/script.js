@@ -1,4 +1,4 @@
-const backend = "https://verbose-cod-46jw9vq5qv63x6-4000.app.github.dev/api";
+const backend = "https://clever-raindrop-5b77c9.netlify.app/";
 
 // ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
