@@ -1,4 +1,5 @@
-const backend = "https://clever-raindrop-5b77c9.netlify.app/";
+const backend = "/api";
+
 
 // ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
