@@ -1,46 +1,33 @@
 const express = require('express');
-const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const router = express.Router();
 
-const usersFile = path.join(__dirname, '../../db/users.json');
+const db = new sqlite3.Database(path.join(__dirname, '../../database.sqlite'));
 
+// Create users table
+db.run(`CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE,
+  password TEXT
+)`);
+
+// Signup
 router.post('/signup', (req, res) => {
   const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ success: false, message: 'Missing credentials' });
-  }
-
-  let users = [];
-  if (fs.existsSync(usersFile)) {
-    users = JSON.parse(fs.readFileSync(usersFile));
-  }
-
-  if (users.find(u => u.username === username)) {
-    return res.status(400).json({ success: false, message: 'User already exists' });
-  }
-
-  users.push({ username, password });
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-  res.status(200).json({ success: true, message: 'Signup successful' });
+  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password], function (err) {
+    if (err) return res.status(400).json({ success: false, message: 'User already exists' });
+    res.json({ success: true, message: 'Signup successful' });
+  });
 });
 
+// Login
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ success: false, message: 'Missing credentials' });
-  }
-
-  const users = fs.existsSync(usersFile) ? JSON.parse(fs.readFileSync(usersFile)) : [];
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (user) {
+  db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, password], (err, row) => {
+    if (err || !row) return res.status(401).json({ success: false, message: 'Invalid credentials' });
     res.json({ success: true, message: 'Login successful' });
-  } else {
-    res.status(401).json({ success: false, message: 'Invalid credentials' });
-  }
+  });
 });
 
 module.exports = router;

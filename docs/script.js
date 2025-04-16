@@ -1,5 +1,4 @@
 const backend = "https://verbose-cod-46jw9vq5qv63x6-4000.app.github.dev/api";
-
 // ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
 if (signupForm) {
@@ -52,24 +51,36 @@ if (loginForm) {
   });
 }
 
-// ===== LOAD PRODUCTS =====
 async function loadProducts(category) {
-  const res = await fetch(`${backend}/products?category=${category}`);
-  const products = await res.json();
-  const container = document.getElementById('product-list');
-  container.innerHTML = '';
-  products.forEach(p => {
-    const card = document.createElement('div');
-    card.innerHTML = `
-      <img src="${p.image}" width="150" />
-      <h3>${p.name}</h3>
-      <p>€${p.price}</p>
-      <button class="add-btn">Add to Cart</button>
-    `;
-    card.querySelector('.add-btn').addEventListener('click', () => addToCart(p));
-    container.appendChild(card);
-  });
+  console.log("➡️ Fetching products for category:", category);
+
+  try {
+    const res = await fetch(`${backend}/products?category=${category}`);
+    const products = await res.json();
+
+    console.log("✅ Products fetched:", products);
+
+    const container = document.getElementById('product-list');
+    container.innerHTML = '';
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.innerHTML = `
+        <img src="${p.image}" width="150" />
+        <h3>${p.name}</h3>
+        <p>€${p.price}</p>
+
+        <button class="add-btn">Add to Cart</button>
+      `;
+      card.querySelector('.add-btn').addEventListener('click', () => addToCart(p));
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("❌ Error loading products:", error);
+  }
 }
+
 
 // ===== CART =====
 function addToCart(product) {
