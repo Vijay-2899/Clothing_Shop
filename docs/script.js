@@ -44,7 +44,7 @@ if (loginForm) {
         localStorage.setItem('currentUser', username);
         window.location.href = 'index.html';
       } else {
-        document.getElementById('login-message').textContent = data.message;
+        document.getElementById('login-message').textContent = data.message || 'Login failed';
       }
     } catch {
       document.getElementById('login-message').textContent = 'Something went wrong';
@@ -84,13 +84,37 @@ function loadCart() {
   const container = document.getElementById('cart-items');
   container.innerHTML = '';
   let total = 0;
-  cartItems.forEach(item => {
-    const el = document.createElement('div');
-    el.innerHTML = `<p>${item.name} - €${item.price}</p>`;
-    container.appendChild(el);
+
+  cartItems.forEach((item, index) => {
+    // Create a row container
+    const row = document.createElement('div');
+    row.style.marginBottom = '10px';
+
+    // Item text
+    const text = document.createElement('span');
+    text.textContent = `${item.name} - €${item.price} `;
+    row.appendChild(text);
+
+    // Remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Remove';
+    removeBtn.addEventListener('click', () => {
+      removeFromCart(index);
+    });
+    row.appendChild(removeBtn);
+
+    container.appendChild(row);
     total += item.price;
   });
+
   document.getElementById('total').textContent = `Total: €${total}`;
+}
+
+function removeFromCart(index) {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  loadCart(); // Refresh the display
 }
 
 // ===== LOGOUT =====
