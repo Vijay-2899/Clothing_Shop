@@ -61,4 +61,13 @@ if (loginForm) {
       document.getElementById('login-message').textContent = 'Something went wrong. Try again.';
     }
   });
+
+  
+  function logout() {
+    // If you’re using localStorage for session tracking, clear it here
+    localStorage.removeItem('cart'); // optional: clear cart
+    // Redirect to login page
+    window.location.href = 'login.html';
+  }
+  
 }
