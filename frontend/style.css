@@ -1,4 +1,45 @@
-
-body { font-family: Arial; padding: 20px; }
-input, button { margin: 5px; padding: 5px; }
-a { text-decoration: none; margin: 5px; }
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  #product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  #product-list div {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    border-radius: 8px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    margin-bottom: 20px;
+    width: 250px;
+  }
+  

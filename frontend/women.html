@@ -1,11 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Women's Collection</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Women's Collection</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
   <h2>Women's Products</h2>
-  <div id="women-products"></div>
-  <a href="cart.html">🛒 View Cart</a>
-  <script src="script.js"></script>
+  <div id="product-list"></div>
+  <a href="cart.html">🛒 Go to Cart</a>
+
+  <script>
+    const products = [
+      {
+        name: "Women's Dress",
+        price: 14.99,
+        image: "images/dress.png"
+      },
+      {
+        name: "Women's Top",
+        price: 7.99,
+        image: "images/top.jpeg"
+      }
+    ];
+
+    function addToCart(product) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({
+        name: product.name,
+        price: product.price,
+        image: product.image
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${product.name} added to cart!`);
+    }
+
+    function loadProducts() {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+
+      products.forEach(p => {
+        const card = document.createElement('div');
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}" width="150" height="150" />
+          <h3>${p.name}</h3>
+          <p>€${p.price.toFixed(2)}</p>
+          <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    loadProducts();
+  </script>
 </body>
 </html>

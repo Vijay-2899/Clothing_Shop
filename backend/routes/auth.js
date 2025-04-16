@@ -1,67 +1,43 @@
 const express = require('express');
-const fs = require('fs');
+const bcrypt = require('bcrypt');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const router = express.Router();
 
-const usersFile = path.join(__dirname, '../db/users.json');
+const dbPath = path.join(__dirname, '../database.sqlite');
+const db = new sqlite3.Database(dbPath);
 
-// Helper to safely read users
-function readUsers() {
-  try {
-    if (!fs.existsSync(usersFile)) return [];
-    const data = fs.readFileSync(usersFile);
-    return JSON.parse(data);
-  } catch (err) {
-    console.error('Error reading users file:', err);
-    return [];
-  }
-}
+// SIGNUP
+router.post('/signup', async (req, res) => {
+  const { username, password } = req.body;
 
-// Helper to write users
-function writeUsers(data) {
-  fs.writeFileSync(usersFile, JSON.stringify(data, null, 2));
-}
-
-// ✅ SIGNUP ROUTE
-router.post('/signup', (req, res) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ success: false, message: 'Missing credentials' });
+  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
+    if (row) {
+      return res.json({ success: false, message: 'User already exists' });
     }
 
-    const users = readUsers();
-
-    if (users.find(u => u.username === username)) {
-      return res.status(409).json({ success: false, message: 'User already exists' });
-    }
-
-    users.push({ username, password });
-    writeUsers(users);
-
-    res.json({ success: true, message: 'Signup successful' });
-  } catch (err) {
-    console.error('Signup error:', err);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], function (err) {
+      if (err) return res.status(500).json({ success: false, message: 'DB error' });
+      res.json({ success: true, message: 'Signup successful' });
+    });
+  });
 });
 
-// ✅ LOGIN ROUTE
+// LOGIN
 router.post('/login', (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const users = readUsers();
+  const { username, password } = req.body;
 
-    const match = users.find(u => u.username === username && u.password === password);
-    if (match) {
-      res.json({ success: true, message: 'Login successful' });
-    } else {
-      res.status(401).json({ success: false, message: 'Invalid credentials' });
+  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user) => {
+    if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials' });
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
-  } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
+
+    res.json({ success: true, message: 'Login successful' });
+  });
 });
 
 module.exports = router;
