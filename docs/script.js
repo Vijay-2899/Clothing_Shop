@@ -53,15 +53,14 @@ if (loginForm) {
 
 async function loadProducts(category) {
   console.log("➡️ Fetching products for category:", category);
-
   try {
     const res = await fetch(`${backend}/products?category=${category}`);
     const products = await res.json();
 
     console.log("✅ Products fetched:", products);
-
     const container = document.getElementById('product-list');
     container.innerHTML = '';
+    const currentUser = localStorage.getItem('currentUser');
 
     products.forEach(p => {
       const card = document.createElement('div');
@@ -69,13 +68,21 @@ async function loadProducts(category) {
         <img src="${p.image}" width="150" />
         <h3>${p.name}</h3>
         <p>€${p.price}</p>
-
         <button class="add-btn">Add to Cart</button>
+        ${currentUser === 'admin' ? '<button class="edit-btn">Edit</button>' : ''}
       `;
+
       card.querySelector('.add-btn').addEventListener('click', () => addToCart(p));
+
+      if (currentUser === 'admin') {
+        card.querySelector('.edit-btn').addEventListener('click', () => {
+          localStorage.setItem('editProduct', JSON.stringify(p));
+          window.location.href = 'edit.html';
+        });
+      }
+
       container.appendChild(card);
     });
-
   } catch (error) {
     console.error("❌ Error loading products:", error);
   }
