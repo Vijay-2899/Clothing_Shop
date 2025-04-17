@@ -1,5 +1,5 @@
 const backend = "https://verbose-cod-46jw9vq5qv63x6-4000.app.github.dev/api";
-// ===== SIGNUP =====
+// SIGNUP 
 const signupForm = document.getElementById('signup-form');
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
@@ -25,7 +25,7 @@ if (signupForm) {
   });
 }
 
-// ===== LOGIN =====
+// LOGIN 
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
@@ -82,7 +82,7 @@ async function loadProducts(category) {
 }
 
 
-// ===== CART =====
+// CART 
 function addToCart(product) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push(product);
@@ -128,8 +128,49 @@ function removeFromCart(index) {
   loadCart(); // Refresh the display
 }
 
-// ===== LOGOUT =====
+//  LOGOUT 
 function logout() {
   localStorage.removeItem('currentUser');
   window.location.href = 'login.html';
 }
+
+// ===== EDIT PRODUCT =====
+const editForm = document.getElementById('edit-form');
+if (editForm) {
+  const product = JSON.parse(localStorage.getItem('editProduct'));
+  if (product) {
+    document.getElementById('edit-id').value = product.id;
+    document.getElementById('edit-name').value = product.name;
+    document.getElementById('edit-price').value = product.price;
+    document.getElementById('edit-category').value = product.category;
+    document.getElementById('edit-image').value = product.image;
+  }
+
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('edit-id').value;
+    const name = document.getElementById('edit-name').value;
+    const price = document.getElementById('edit-price').value;
+    const category = document.getElementById('edit-category').value;
+    const image = document.getElementById('edit-image').value;
+
+    try {
+      const res = await fetch(`${backend}/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, price, category, image })
+      });
+
+      const data = await res.json();
+      if (data.updated) {
+        alert('Product updated!');
+        window.location.href = category === 'men' ? 'men.html' : 'women.html';
+      } else {
+        document.getElementById('edit-message').textContent = 'Update failed.';
+      }
+    } catch (err) {
+      document.getElementById('edit-message').textContent = 'Something went wrong.';
+    }
+  });
+}
+

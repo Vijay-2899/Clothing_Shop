@@ -1,0 +1,22 @@
+<!-- docs/edit.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Product</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Edit Product</h2>
+  <form id="edit-form">
+    <input type="hidden" id="edit-id" />
+    <input type="text" id="edit-name" placeholder="Product Name" required />
+    <input type="number" id="edit-price" placeholder="Price" required />
+    <input type="text" id="edit-category" placeholder="Category" required />
+    <input type="text" id="edit-image" placeholder="Image URL" required />
+    <button type="submit">Update Product</button>
+  </form>
+  <p id="edit-message"></p>
+  <script src="script.js"></script>
+</body>
+</html>

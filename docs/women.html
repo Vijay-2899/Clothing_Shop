@@ -2,20 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Women’s Products</title>
+  <title>Women's Products</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Women’s Products</h1>
-  <nav>
-    <a href="index.html">Back to Home</a> |
-    <a href="cart.html">Cart</a>
-  </nav>
+  <h2>Women's Products</h2>
+  <button onclick="window.location.href='cart.html'"> Go to Cart</button>
+  <button onclick="window.location.href='index.html'"> Back to Home</button>
   <div id="product-list"></div>
 
-  <script>
-    window.onload = () => loadProducts('women');
-  </script>
   <script src="script.js"></script>
+  <script>
+    loadProducts('women');
+  </script>
 </body>
 </html>
