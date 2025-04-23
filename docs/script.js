@@ -1,4 +1,4 @@
-const backend = "http://localhost:4000/api"; // Update if hosted
+const backend = https://verbose-cod-46jw9vq5qv63x6-4000.app.github.dev/
 
 // SIGNUP
 const signupForm = document.getElementById('signup-form');
