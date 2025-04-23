@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 16px;
+      margin: 10px;
+      width: 200px;
+      display: inline-block;
+      text-align: center;
+    }
+    .product-card img {
+      width: 100px;
+      height: auto;
+    }
+    .product-card button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center;">Admin Dashboard</h2>
+  <div id="admin-product-list" style="text-align: center;"></div>
+
+  <script>
+    const backend = "http://localhost:4000/api"; // ✅ update this if needed
+
+    async function loadAllProducts() {
+      const res = await fetch(`${backend}/products`);
+      const products = await res.json();
+      const container = document.getElementById('admin-product-list');
+      container.innerHTML = '';
+
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>€${product.price}</p>
+          <p><strong>${product.category}</strong></p>
+          <button onclick='editProduct(${JSON.stringify(product)})'>Edit</button>
+          <button onclick='deleteProduct(${product.id})'>Delete</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function editProduct(product) {
+      localStorage.setItem('editProduct', JSON.stringify(product));
+      window.location.href = 'edit.html';
+    }
+
+    async function deleteProduct(id) {
+      const confirmDelete = confirm('Are you sure you want to delete this product?');
+      if (!confirmDelete) return;
+
+      const res = await fetch(`${backend}/products/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (res.status === 204) {
+        alert('Product deleted successfully!');
+        loadAllProducts();
+      } else {
+        alert('Error deleting product.');
+      }
+    }
+
+    window.onload = loadAllProducts;
+  </script>
+</body>
+</html>

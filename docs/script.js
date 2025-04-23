@@ -1,5 +1,6 @@
 const backend = "https://verbose-cod-46jw9vq5qv63x6-4000.app.github.dev/api";
-// SIGNUP 
+
+// ===== SIGNUP =====
 const signupForm = document.getElementById('signup-form');
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
@@ -25,7 +26,7 @@ if (signupForm) {
   });
 }
 
-// LOGIN 
+// ===== LOGIN =====
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
@@ -41,7 +42,11 @@ if (loginForm) {
       const data = await res.json();
       if (data.success) {
         localStorage.setItem('currentUser', username);
-        window.location.href = 'index.html';
+        if (username === 'admin') {
+          window.location.href = 'admin.html';
+        } else {
+          window.location.href = 'index.html';
+        }
       } else {
         document.getElementById('login-message').textContent = data.message || 'Login failed';
       }
@@ -51,17 +56,13 @@ if (loginForm) {
   });
 }
 
+// ===== LOAD PRODUCTS FOR USERS =====
 async function loadProducts(category) {
-  console.log("➡️ Fetching products for category:", category);
   try {
     const res = await fetch(`${backend}/products?category=${category}`);
     const products = await res.json();
-
-    console.log("✅ Products fetched:", products);
     const container = document.getElementById('product-list');
     container.innerHTML = '';
-    const currentUser = localStorage.getItem('currentUser');
-
     products.forEach(p => {
       const card = document.createElement('div');
       card.innerHTML = `
@@ -69,27 +70,16 @@ async function loadProducts(category) {
         <h3>${p.name}</h3>
         <p>€${p.price}</p>
         <button class="add-btn">Add to Cart</button>
-        ${currentUser === 'admin' ? '<button class="edit-btn">Edit</button>' : ''}
       `;
-
       card.querySelector('.add-btn').addEventListener('click', () => addToCart(p));
-
-      if (currentUser === 'admin') {
-        card.querySelector('.edit-btn').addEventListener('click', () => {
-          localStorage.setItem('editProduct', JSON.stringify(p));
-          window.location.href = 'edit.html';
-        });
-      }
-
       container.appendChild(card);
     });
-  } catch (error) {
-    console.error("❌ Error loading products:", error);
+  } catch (err) {
+    console.error("Error loading products:", err);
   }
 }
 
-
-// CART 
+// ===== CART FUNCTIONS =====
 function addToCart(product) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push(product);
@@ -102,29 +92,21 @@ function loadCart() {
   const container = document.getElementById('cart-items');
   container.innerHTML = '';
   let total = 0;
-
   cartItems.forEach((item, index) => {
-    // Create a row container
     const row = document.createElement('div');
     row.style.marginBottom = '10px';
-
-    // Item text
     const text = document.createElement('span');
     text.textContent = `${item.name} - €${item.price} `;
     row.appendChild(text);
-
-    // Remove button
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove';
     removeBtn.addEventListener('click', () => {
       removeFromCart(index);
     });
     row.appendChild(removeBtn);
-
     container.appendChild(row);
     total += item.price;
   });
-
   document.getElementById('total').textContent = `Total: €${total}`;
 }
 
@@ -132,16 +114,59 @@ function removeFromCart(index) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.splice(index, 1);
   localStorage.setItem('cart', JSON.stringify(cart));
-  loadCart(); // Refresh the display
+  loadCart();
 }
 
-//  LOGOUT 
+// ===== LOGOUT =====
 function logout() {
   localStorage.removeItem('currentUser');
   window.location.href = 'login.html';
 }
 
-// ===== EDIT PRODUCT =====
+// ===== ADMIN: LOAD ALL PRODUCTS =====
+async function loadAdminProducts() {
+  const container = document.getElementById('admin-product-list');
+  if (!container) return;
+  try {
+    const res = await fetch(`${backend}/products`);
+    const products = await res.json();
+    container.innerHTML = '';
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.classList.add('admin-card');
+      card.innerHTML = `
+        <img src="${p.image}" width="100" />
+        <h3>${p.name}</h3>
+        <p>€${p.price}</p>
+        <p><small>${p.category}</small></p>
+        <button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+        <button onclick='deleteProduct(${p.id})'>🗑️ Delete</button>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Error loading admin products:', err);
+  }
+}
+
+function editProduct(product) {
+  localStorage.setItem('editProduct', JSON.stringify(product));
+  window.location.href = 'edit.html';
+}
+
+async function deleteProduct(id) {
+  if (confirm('Are you sure you want to delete this product?')) {
+    try {
+      await fetch(`${backend}/products/${id}`, { method: 'DELETE' });
+      alert('Product deleted!');
+      loadAdminProducts();
+    } catch (err) {
+      alert('Delete failed.');
+    }
+  }
+}
+
+// ===== EDIT PRODUCT PAGE =====
 const editForm = document.getElementById('edit-form');
 if (editForm) {
   const product = JSON.parse(localStorage.getItem('editProduct'));
@@ -167,7 +192,6 @@ if (editForm) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, price, category, image })
       });
-
       const data = await res.json();
       if (data.updated) {
         alert('Product updated!');
@@ -180,4 +204,3 @@ if (editForm) {
     }
   });
 }
-
